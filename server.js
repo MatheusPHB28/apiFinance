@@ -1,33 +1,42 @@
-const express = require('express'); // importa o framework Express
-const dotenv = require('dotenv'); // importar o pacote dotenv para genrenciar variaveis de ambientes 
-const cors = require('cors'); //importa o pacote cors para para permitir requisiçoes 
-const bodyParser = require('body-parser');
 
-// comfigurar as variaveis de ambiente
+const dotenv = require('dotenv'); // Importa o pacote dotenv para gerenciar variáveis de ambiente
 
+//Configurar as Variáveis de ambiente
 
-dotenv.config(); //carrega as variaveis definidas  no arquivo '.env'
+dotenv.config(); // Carrega as variáveis definidas no arquivo '.env' para process.env(processos)
 
-// inicializar nova aplicação Express
+//Importar as Bibliotecas
+const express = require('express'); // Importa o framework Express
+const cors = require('cors'); // Importa o pacote cors para permitir requisições de diferentes origens
+const bodyParser = require('body-parser'); // Importa o pacote body-parser para analisar o corpo das requisições HTTP
 
-const app = express(); 
+const db = require('./config/db'); // Importa a conexão com o banco de dados
 
-// configurar o cors e o body-parse
-
-app.use(cors()); //habilita o cors para todas as rotas 
-app.use(bodyParser.json()); //configura o body-parse para analizar requisiçoes json 
+const transactionsRoutes = require('./routes/transactions');
 
 
-// Rota inicial para testar o servidor
+//inicializar nova aplicação Express
 
-app.get('/',(req, res)=> {
-    res.send("Servidor está rolando"); //definir uma rota para testar o servidor
-});
+ const app = express();// Inicializa uma nova aplicação Express
 
-//Configurar o servidor para uma porta especifica
 
-const PORT = process.env.PORT || 3000; // Define a porta a partir da variavel
-app.listen(PORT,()=> {
+//configurar o CORS e o bady-Parse
 
-    console.log(`servidor rodando na porta ${PORT}`);
+app.use(cors()); // Habilita o CORS para todas as rotas
+app.use(bodyParser.json()); // Configura o body-parser para analisar requisições JSON
+
+
+app.use('./api/transactions', transactionsRoutes);
+
+//Rota inicial para testar o servidor
+
+app.get('/', (req, res) => {
+    res.send('Servidor está rodando'); // Define uma rota inicial para testar o servidor
+  });
+
+//Configurar o servidor para uma porta específica
+
+const PORT = process.env.PORT || 3000; // Define a porta a partir da variável de ambiente ou usa a porta 3000 como padrão
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`); // Loga uma mensagem informando que o servidor está rodando
 });
