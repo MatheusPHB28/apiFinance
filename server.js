@@ -26,7 +26,7 @@ app.use(cors()); // Habilita o CORS para todas as rotas
 app.use(bodyParser.json()); // Configura o body-parser para analisar requisições JSON
 
 
-app.use('./api/transactions', transactionsRoutes);
+app.use('/api/transactions', transactionsRoutes);
 
 //Rota inicial para testar o servidor
 
