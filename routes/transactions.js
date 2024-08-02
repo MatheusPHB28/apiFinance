@@ -13,7 +13,10 @@ router.post('/', transactionsController.addTransactions);
 // Definindo uma rota para atualizar uma transação existente (subistituição completa
 router.put('/:id',transactionsController.updateTransactionPut);
 
-//router.patch('/:id', transactionsController.updateTransactionPatch)
+router.patch('/:id', transactionsController.updateTransactionPatch)
+
+router.delete('/:id', transactionsController.deleteTransaction
+)
 
 // Exportar o roteador
 module.exports = router;
